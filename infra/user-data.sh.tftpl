@@ -1,0 +1,16 @@
+#!/bin/bash
+set -euo pipefail
+exec > >(tee /var/log/order-pulse-bootstrap.log) 2>&1
+dnf install -y docker git openssl
+systemctl enable --now docker
+mkdir -p /usr/local/lib/docker/cli-plugins
+curl -fsSL https://github.com/docker/compose/releases/download/v2.40.2/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
+chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+repo=$(printf '%s' '${repository_url}' | base64 -d)
+revision=$(printf '%s' '${revision}' | base64 -d)
+git clone -- "$repo" /opt/order-pulse
+cd /opt/order-pulse
+git checkout "$revision"
+printf 'DATABASE_PASSWORD=%s\n' "$(openssl rand -hex 24)" > .env
+chmod 600 .env
+docker compose up -d --build

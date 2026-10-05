@@ -1,0 +1,13 @@
+{
+  "measured_at": "2026-10-05T11:55:34.908495+00:00",
+  "host": "macOS-14.6-arm64-arm-64bit",
+  "unique_orders": 1000,
+  "http_requests": 2000,
+  "workers": 20,
+  "submission_seconds": 2.563,
+  "end_to_end_seconds": 5.61,
+  "completed_orders_per_second": 178.24,
+  "duplicate_order_effects": 0,
+  "stock_deductions": 1000,
+  "scope": "HTTP ingress plus Kafka outboxes, inventory reservation and SQL analytics; HTTP retry for each order; not a raw Kafka events/sec benchmark"
+}
