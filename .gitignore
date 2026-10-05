@@ -6,3 +6,4 @@ reports/
 infra/terraform.tfstate*
 infra/.terraform/
 *.log
+docs/interview/
